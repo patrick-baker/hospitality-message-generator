@@ -1,10 +1,14 @@
+// library allowing Node to be run on the browser
 const express = require('express');
+// middleware that parses the incoming information into JSON
 const bodyParser = require('body-parser');
+// require the JSON files to work with
 const companies = require('./modules/Companies.json');
-const guests = require('./modules/Guests.json')
+const guests = require('./modules/Guests.json');
 const greetings = require('./modules/Greetings.json');
-const templates = require('./modules/Templates.json')
+const templates = require('./modules/Templates.json');
 const app = express();
+// opens on local host 3000, or allows heroku to choose its own port
 const PORT = process.env.PORT || 3000;
 
 app.use(express.static('server/public'));
@@ -31,10 +35,6 @@ app.get('/templateInfo', (req, res) => {
     templates.forEach(templates => templateData.push({"id": templates.id, "type": templates.type}))
     res.send(templateData);
 })
-
-app.get('/getCurrentTime', (req, res) => {
-    res.send({"currentTimeStampInHours": getCurrentHourOfDay()});
-});
 
 app.post('/createMessage', (req, res) => {
     console.log(req.body);

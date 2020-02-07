@@ -33,23 +33,46 @@ app.get('/templateInfo', (req, res) => {
 })
 
 app.get('/getCurrentTime', (req, res) => {
-    res.send({"currentTimeStampInHours": getCurrentTime()});
+    res.send({"currentTimeStampInHours": getCurrentHourOfDay()});
 });
 
 app.post('/createMessage', (req, res) => {
     console.log(req.body);
-    guest = guests.filter(guest => guest.id === Number(req.body.guestId));
-    company = companies.filter(company => company.id === Number(req.body.companyId));
-    template = templates.filter(template => template.id === Number(req.body.templateId));
-    dataToSend = {guest: guest, company: company, template: template};
+    let guest = guests.filter(guest => guest.id === Number(req.body.guestId));
+    let company = companies.filter(company => company.id === Number(req.body.companyId));
+    let template = templates.filter(template => template.id === Number(req.body.templateId));
+    // loop through greeting file to send appropriate greeting based on time of day.
+    let greetingsToSend;
+    let currentHour;
+    // this initialization of currentHour accounts for different timezones in companies.json
+    // it is not a complete fix, as I don't think that this is a main focus of the code challenge
+    if (company.timezone == "US/Eastern") {
+        currentHour = getCurrentHourOfDay(1);
+    } else if (company.timezone = "US/Pacific") {
+        currentHour = getCurrentHourOfDay(-2);
+    } else {
+        currentHour = getCurrentHourOfDay(0);
+    }
+    console.log("currentHour of company:", currentHour);
+    greetings.forEach(greeting => {
+        if (greeting.startTime <= currentHour && currentHour < greeting.endTime) {
+            greetingsToSend = greeting.greeting
+        } else if (currentHour >= 21 || currentHour < 4) {
+            greetingsToSend = "Sorry to be messaging you so late,"
+        }
+    })
+    // sends data back to the client in object notation
+    dataToSend = {guest: guest[0], company: company[0], template: template[0], greeting: greetingsToSend};
     console.log("data to send from /createMessage:", dataToSend);
     res.send(dataToSend);
 })
 
-getCurrentHourOfDay = () => {
+getCurrentHourOfDay = (number) => {
     let date = new Date();
     // returns hours in central time
-    return date.getHours();
+    console.log(date.getHours());
+    // allows for different timezones, and ensures that the hours will always be between 0 and 23
+    return date.getHours() + number % 24;
 }
 
 app.listen(PORT, () => {

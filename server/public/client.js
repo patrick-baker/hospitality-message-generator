@@ -4,7 +4,7 @@ function onReady() {
     getGuestInfo();
     getCompanyInfo();
     getTemplateInfo();
-    getCurrentTime();
+    // descendent selector to run the createMessage function when a dropdown item is selected
     $(".dropdown-content").on("click", ".dropdown-item", createMessage);
 }
 
@@ -64,7 +64,7 @@ function getTemplateInfo() {
     })
 }
 
-// appends guest, company, and template info to corresponding dropdown
+// appends guest, company, and template info to corresponding dropdowns
 function appendInfo(targetElement, array) {
     $(`#${targetElement}`).empty();
     if (targetElement === "guestName") {
@@ -110,18 +110,42 @@ function createMessage () {
                 companyId: companyId,
                 templateId: templateId
             }
+        }).then(function (response) {
+            // console.log(response);
+            // creates message from server response and appends it to the DOM
+            appendMessage(response);
         })
     }
         // logs the variables to be used in ajax request
-    console.log(guestId, templateId, companyId);
+    // console.log(guestId, templateId, companyId);
 }
 
+function appendMessage (data) {
+    // all of the relevant variables for message template from the server response
+    let greeting = data.greeting;
+    let guestName = data.guest.firstName;
+    let roomNumber = data.guest.reservation.roomNumber;
+    let companyName = data.company.company;
+    let companyCity = data.company.city;
+    let intro = data.template.introduction;
+    let body = data.template.message;
+    let requiresHotelName = data.template.requiresHotelName;
+    let requiresRoomNumber = data.template.requiresRoomNumber;
+    let requiresLocation = data.template.requiresLocation;
 
-function getCurrentTime() {
-    $.ajax({
-        url: '/getCurrentTime',
-        method: 'GET'
-    }).then(function (response) {
-        $("#timestamp").text(response.currentTimeStampInHours);
-    })
+    let customizedMessage;
+    // message template for departure, I chose to use these booleans instead of simply the template.type 
+    //so that they can cover more template types in the future without having to specify for every one
+    if (requiresHotelName && requiresLocation && !requiresRoomNumber) {
+        customizedMessage = `${greeting} ${guestName}! ${intro} ${companyName}. ${body} ${companyCity}!`;
+    // message template for checking up
+    } else if (requiresHotelName && !requiresLocation && !requiresRoomNumber) {
+        customizedMessage = `${greeting} ${guestName}! ${intro} ${companyName}. ${body}`;
+    // message template for arrival
+    } else if (requiresHotelName && requiresLocation && requiresRoomNumber) {
+        customizedMessage = `${greeting} ${guestName}! ${intro} ${companyName}. Room ${roomNumber} ${body} ${companyCity}!`;
+    }
+    
+    // sets the text field on the DOM to customized message
+    $("#customizedMessage").text(customizedMessage);
 }

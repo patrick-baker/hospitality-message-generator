@@ -12,21 +12,25 @@
 <body>
     <h1>Message Template Generator</h1>
     <h4>Please select the correct information</h4>
-    <div class="dropdown">
-        <button onclick="showOptions('guestName')" class="dropbtn">Guest Name</button>
-        <div id="guestName" class="dropdown-content">
+    <div id="dropdown-container">
+        <div class="dropdown">
+            <button onclick="showOptions('guestName')" class="dropbtn">Guest Name</button>
+            <div id="guestName" class="dropdown-content">
+            </div>
+        </div>
+        <div class="dropdown">
+            <button onclick="showOptions('companyName')" class="dropbtn">Company Name</button>
+            <div id="companyName" class="dropdown-content">
+            </div>
+        </div>
+        <div class="dropdown">
+            <button onclick="showOptions('templateType')" class="dropbtn">Template Type</button>
+            <div id="templateType" class="dropdown-content">
+            </div>
         </div>
     </div>
-    <div class="dropdown">
-        <button onclick="showOptions('companyName')" class="dropbtn">Company Name</button>
-        <div id="companyName" class="dropdown-content">
-        </div>
-    </div>
-    <div class="dropdown">
-        <button onclick="showOptions('templateType')" class="dropbtn">Template Type</button>
-        <div id="templateType" class="dropdown-content">
-        </div>
-    </div>
+
+    <p id="customizedMessage"></p>
 
     <script src="client.js"></script>
 </body>

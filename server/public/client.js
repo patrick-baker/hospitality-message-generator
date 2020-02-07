@@ -5,7 +5,7 @@ function onReady() {
     getCompanyInfo();
     getTemplateInfo();
     getCurrentTime();
-    $(".dropdown-content").on("click", ".dropdown-item", logData);
+    $(".dropdown-content").on("click", ".dropdown-item", createMessage);
 }
 
 /* When the user clicks on the button,
@@ -82,8 +82,38 @@ function appendInfo(targetElement, array) {
     }
 }
 
-function logData () {
-    console.log($(this).data());
+// declares variables for use in message Creation ajax request
+let guestId;
+let companyId;
+let templateId;
+
+function createMessage () {
+    // initializes above declared variables for ajax request
+        // shows the name value of the data variable when a dropdown value is chosen
+    // console.log($(this).data().name);
+    if ($(this).data().name === "companyName") {
+        companyId = $(this).data().id;
+    } else if ($(this).data().name === "templateType") {
+        templateId = $(this).data().id;
+    }
+    else if ($(this).data().name === "guestName") {
+        guestId = $(this).data().id;
+    }
+
+    // creates GET request once these three variables are initialized
+    if (guestId && companyId && templateId) {
+        $.ajax({
+            url: '/createMessage',
+            method: 'POST',
+            data: {
+                guestId: guestId,
+                companyId: companyId,
+                templateId: templateId
+            }
+        })
+    }
+        // logs the variables to be used in ajax request
+    console.log(guestId, templateId, companyId);
 }
 
 

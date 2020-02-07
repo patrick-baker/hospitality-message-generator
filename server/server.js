@@ -36,6 +36,16 @@ app.get('/getCurrentTime', (req, res) => {
     res.send({"currentTimeStampInHours": getCurrentTime()});
 });
 
+app.post('/createMessage', (req, res) => {
+    console.log(req.body);
+    guest = guests.filter(guest => guest.id === Number(req.body.guestId));
+    company = companies.filter(company => company.id === Number(req.body.companyId));
+    template = templates.filter(template => template.id === Number(req.body.templateId));
+    dataToSend = {guest: guest, company: company, template: template};
+    console.log("data to send from /createMessage:", dataToSend);
+    res.send(dataToSend);
+})
+
 getCurrentHourOfDay = () => {
     let date = new Date();
     // returns hours in central time

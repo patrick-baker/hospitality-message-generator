@@ -88,9 +88,10 @@ let companyId;
 let templateId;
 
 function createMessage () {
-    // initializes above declared variables for ajax request
-        // shows the name value of the data variable when a dropdown value is chosen
+    // shows the name value of the data variable when a dropdown value is chosen
     // console.log($(this).data().name);
+
+    // initializes above declared variables for ajax request
     if ($(this).data().name === "companyName") {
         companyId = $(this).data().id;
     } else if ($(this).data().name === "templateType") {

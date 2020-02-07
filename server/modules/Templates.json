@@ -1,0 +1,29 @@
+[
+    {
+        "id": 1,
+        "type": "arrival",
+        "introduction": "Welcome to",
+        "requiresHotelName": true,
+        "requiresRoomNumber": true,
+        "message": "is now ready for you. Please let us know if you need anything, and enjoy your stay in",
+        "requiresLocation": true
+    },
+    {
+        "id": 2,
+        "type": "departure",
+        "introduction": "We hope you have enjoyed your stay at",
+        "requiresHotelName": true,
+        "requiresRoomNumber": false,
+        "message": "Checkout is at 11 am tomorrow. Please feel free to have complimentary breakfast, and let us know if you need anything else. Come back soon to",
+        "requiresLocation": true
+    },
+    {
+        "id": 3,
+        "type": "checkingUp",
+        "introduction": "I hope everything is going great during your stay at",
+        "requiresHotelName": true,
+        "requiresRoomNumber": false,
+        "message": "Please let me know if there is anything that we can do to make your stay more comfortable!",
+        "requiresLocation": false
+    }
+]

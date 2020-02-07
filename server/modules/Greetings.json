@@ -1,0 +1,27 @@
+[
+    {
+        "id": 1,
+        "startTime": 4,
+        "endTime": 12,
+        "greeting": "Good morning!"
+    },
+    {
+        "id": 2,
+        "startTime": 12,
+        "endTime": 5,
+        "greeting": "Good afternoon!"
+    },
+    {
+        "id": 3,
+        "startTime": 17,
+        "endTime": 22,
+        "greeting": "Good evening!"
+    },
+    {
+        "id": 4,
+        "startTime": 22,
+        "endTime": 4,
+        "greeting": "Good evening!"
+    }
+
+]

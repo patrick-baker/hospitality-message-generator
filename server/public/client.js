@@ -2,6 +2,7 @@ $(document).ready(onReady);
 
 function onReady() {
     getGuestInfo();
+    getCurrentTime();
 }
 
 function getGuestInfo() {
@@ -10,6 +11,15 @@ function getGuestInfo() {
         method: 'GET'
     }).then(function (response) {
         appendGuestInfo(response);
+    })
+}
+
+function getCurrentTime() {
+    $.ajax({
+        url: '/getCurrentTime',
+        method: 'GET'
+    }).then(function (response) {
+        $("#timestamp").text(response.currentTimeStampInHours);
     })
 }
 

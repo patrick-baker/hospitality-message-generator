@@ -6,14 +6,33 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <script src="jquery.js"></script>
-    <script src="client.js"></script>
     <link rel="stylesheet" href="style.css">
     <title>Hospitality Message Generator</title>
 </head>
 <body>
+    <h1>Message Template Generator</h1>
+    <h4>Please select the correct information</h4>
+    <div class="dropdown">
+        <button onclick="showOptions('guestName')" class="dropbtn">Guest Name</button>
+        <div id="guestName" class="dropdown-content">
+        </div>
+    </div>
+    <div class="dropdown">
+        <button onclick="showOptions('companyName')" class="dropbtn">Company Name</button>
+        <div id="companyName" class="dropdown-content">
+        </div>
+    </div>
+    <div class="dropdown">
+        <button onclick="showOptions('templateType')" class="dropbtn">Template Type</button>
+        <div id="templateType" class="dropdown-content">
+        </div>
+    </div>
+
+
+
     <h1>Guest info</h1>
     <p id="guest-info"></p>
     <h3 id="timestamp"></h3>
-    
+    <script src="client.js"></script>
 </body>
 </html>

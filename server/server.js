@@ -2,6 +2,8 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const companies = require('./modules/Companies.json');
 const guests = require('./modules/Guests.json')
+const greetings = require('./modules/Greetings.json');
+const templates = require('./modules/Templates.json')
 const app = express();
 const PORT = process.env.PORT || 3000;
 
@@ -9,7 +11,25 @@ app.use(express.static('server/public'));
 app.use(bodyParser.urlencoded({extended: true}));
 
 app.get('/guestInfo', (req, res) => {
-    res.send(guests);
+    // create smaller guest array to send to front end
+    guestData = [];
+    guests.forEach(guests => guestData.push({"id": guests.id, "firstName": guests.firstName}))
+    console.log(guestData);
+    res.send(guestData);
+})
+
+app.get('/companyInfo', (req, res) => {
+    // create smaller company array to send to front end
+    companyData = [];
+    companies.forEach(companies => companyData.push({"id": companies.id, "company": companies.company}))
+    res.send(companyData);
+})
+
+app.get('/templateInfo', (req, res) => {
+    // create smaller template array to send to front end
+    templateData = [];
+    templates.forEach(templates => templateData.push({"id": templates.id, "type": templates.type}))
+    res.send(templateData);
 })
 
 app.get('/getCurrentTime', (req, res) => {
